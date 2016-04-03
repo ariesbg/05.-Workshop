@@ -1,0 +1,366 @@
+using System;
+
+
+class Hangman
+{
+    static void Main()
+    {
+        //champion
+        char c = 'c';
+        char h = 'h';
+        char a = 'a';
+        char m = 'm';
+        char p = 'p';
+        char i = 'i';
+        char o = 'o';
+        char n = 'n';
+
+        // pri greshna bukva
+        char hiddenChar = '_';
+
+        //pri ve4e izpisana bukva
+        bool isCShown = false;
+        bool isHShown = false;
+        bool isAShown = false;
+        bool isMShown = false;
+        bool isPShown = false;
+        bool isIShown = false;
+        bool isOShown = false;
+        bool isNShown = false;
+
+        //pokazva broq na jivotite, koito ni ostavat
+        int livesCount = 9;
+
+        Console.WriteLine("_ _ _ _ _ _ _ _");
+
+        //startira programata otnachalo, sled kato sme kazali bukva
+        while (true)
+        {
+            Console.Write("Enter a command: ");
+            string command = Console.ReadLine();
+
+            if (isCShown)
+            {
+                Console.Write("{0} ", c);
+            }
+            else
+            {
+                Console.Write("{0} ", hiddenChar);
+            }
+
+            if (isHShown)
+            {
+                Console.Write("{0} ", h);
+            }
+            else
+            {
+                Console.Write("{0} ", hiddenChar);
+            }
+
+            if (isAShown)
+            {
+                Console.Write("{0} ", a);
+            }
+            else
+            {
+                Console.Write("{0} ", hiddenChar);
+            }
+
+            if (isMShown)
+            {
+                Console.Write("{0} ", m);
+            }
+            else
+            {
+                Console.Write("{0} ", hiddenChar);
+            }
+
+            if (isPShown)
+            {
+                Console.Write("{0} ", p);
+            }
+            else
+            {
+                Console.Write("{0} ", hiddenChar);
+            }
+
+            if (isIShown)
+            {
+                Console.Write("{0} ", i);
+            }
+            else
+            {
+                Console.Write("{0} ", hiddenChar);
+            }
+
+            if (isOShown)
+            {
+                Console.Write("{0} ", o);
+            }
+            else
+            {
+                Console.Write("{0} ", hiddenChar);
+            }
+
+            if (isNShown)
+            {
+                Console.Write("{0} ", n);
+            }
+            else
+            {
+                Console.Write("{0} ", hiddenChar);
+            }
+
+            Console.WriteLine();
+
+            //vavejdame razlichni komandi: pri "view" pokazva kolko jivota ni ostavat
+            if (command == "view")
+            {
+                Console.WriteLine("Your lives are {0}", livesCount);
+            }
+
+            //vavejdame bukvi
+            if (command == "guess")
+            {
+                Console.Write("Enter letter: ");
+                char letter = Char.Parse(Console.ReadLine());
+
+                //ako vavedenata bukva e "c"
+                if (letter == c)
+                {
+                    if (!isCShown) //ako vavejdame 'c'  i ne ni e pokazano
+                    {
+                        isCShown = true;
+                    }
+                    else // ako 'c' veche e dadena
+                    {
+                        Console.WriteLine("You already gave this letter!");
+                    }
+                }
+
+                if (letter == h)
+                {
+                    if (!isHShown)
+                    {
+                        isHShown = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already gave this letter!");
+                    }
+                }
+
+                if (letter == a)
+                {
+                    if (!isAShown)
+                    {
+                        isAShown = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already gave this letter!");
+                    }
+                }
+
+                if (letter == m)
+                {
+                    if (!isMShown)
+                    {
+                        isMShown = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already gave this letter!");
+                    }
+                }
+
+                if (letter == p)
+                {
+                    if (!isPShown)
+                    {
+                        isPShown = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already gave this letter!");
+                    }
+                }
+
+                if (letter == i)
+                {
+                    if (!isIShown)
+                    {
+                        isIShown = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already gave this letter!");
+                    }
+                }
+
+                if (letter == o)
+                {
+                    if (!isOShown)
+                    {
+                        isOShown = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already gave this letter!");
+                    }
+                }
+
+                if (letter == n)
+                {
+                    if (!isNShown)
+                    {
+                        isNShown = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You already gave this letter!");
+                    }
+                }
+
+                //ako vavejdame razlichni bukvi  ot dadenite
+                if (letter != c && letter != h && letter != a && letter != m && letter != p && letter != i && letter != o && letter != n)
+                {
+
+                    livesCount--;
+                    Console.WriteLine("Mistake! Try again.");
+                }
+
+                if (livesCount == 0)
+                {
+
+                    isCShown = false;
+                    isHShown = false;
+                    isAShown = false;
+                    isMShown = false;
+                    isPShown = false;
+                    isIShown = false;
+                    isOShown = false;
+                    isNShown = false;
+                    livesCount = 9;
+
+                    Console.WriteLine("game over");
+                    Console.Clear();
+                }
+
+                if (isCShown)
+                {
+                    Console.Write("{0} ", c);
+                }
+                else
+                {
+                    Console.Write("{0} ", hiddenChar);
+                }
+
+                if (isHShown)
+                {
+                    Console.Write("{0} ", h);
+                }
+                else
+                {
+                    Console.Write("{0} ", hiddenChar);
+                }
+
+                if (isAShown)
+                {
+                    Console.Write("{0} ", a);
+                }
+                else
+                {
+                    Console.Write("{0} ", hiddenChar);
+                }
+
+                if (isMShown)
+                {
+                    Console.Write("{0} ", m);
+                }
+                else
+                {
+                    Console.Write("{0} ", hiddenChar);
+                }
+
+                if (isPShown)
+                {
+                    Console.Write("{0} ", p);
+                }
+                else
+                {
+                    Console.Write("{0} ", hiddenChar);
+                }
+
+                if (isIShown)
+                {
+                    Console.Write("{0} ", i);
+                }
+                else
+                {
+                    Console.Write("{0} ", hiddenChar);
+                }
+
+                if (isOShown)
+                {
+                    Console.Write("{0} ", o);
+                }
+                else
+                {
+                    Console.Write("{0} ", hiddenChar);
+                }
+
+                if (isNShown)
+                {
+                    Console.Write("{0} ", n);
+                }
+                else
+                {
+                    Console.Write("{0} ", hiddenChar);
+                }
+
+                Console.WriteLine();
+
+                if (isCShown && isHShown && isAShown && isMShown && isPShown && isIShown && isOShown && isNShown) //zanulqvame stoinostite, kogato sme
+                //poznali dumata ve4e i po4vame otna4alo
+                {
+
+                    isCShown = false;
+                    isHShown = false;
+                    isAShown = false;
+                    isMShown = false;
+                    isPShown = false;
+                    isIShown = false;
+                    isOShown = false;
+                    isNShown = false;
+                    livesCount = 9;
+
+                    Console.WriteLine("Great job!");
+                    Console.Clear();
+                }
+            }
+
+            if (command == "restart") // restartirame programata s ctrl + r
+            {
+                Console.WriteLine("Do u really want that?? If yes please press 'ctrl + r'! ");
+                ConsoleKeyInfo key = Console.ReadKey();
+                if (key.Modifiers == ConsoleModifiers.Control && key.Key == ConsoleKey.R)
+                {
+                    isCShown = false;
+                    isHShown = false;
+                    isAShown = false;
+                    isMShown = false;
+                    isPShown = false;
+                    isIShown = false;
+                    isOShown = false;
+                    isNShown = false;
+                 
+                    Console.Clear();
+                    Console.WriteLine("Start again");
+                }
+
+            }
+        }
+    }
+}
+
