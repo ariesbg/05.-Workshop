@@ -1,0 +1,252 @@
+using System;
+using System.Threading;
+
+namespace PingPong
+{
+
+    class PingPong
+    {
+        
+        static bool ballDirectionUp = true; 
+        static bool ballDirectionRight = false;
+
+       
+        static int firstPadSize = 5;
+        static int secondPadSize = 5;
+
+       
+        static int ballPosX = 0;
+        static int ballPosY = 0;
+
+        
+        static int firstPlayerPos = 0;
+
+        
+        static int secondPlayerPos = 0;
+
+       
+        static int firstPlayerResult = 0;
+        static int secondPlayerResult = 0;
+
+        
+        static Random randGenerator = new Random();
+
+        
+        static void RemoveScrollBars()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.BufferHeight = Console.WindowHeight;
+            Console.BufferWidth = Console.WindowWidth;
+        }
+
+        
+
+        static void DrawFirstPlayer()
+        {
+            for (int y = firstPlayerPos; y < firstPlayerPos + firstPadSize; y++)
+            {
+                PrintAtPosition(0, y, '|'); 
+                PrintAtPosition(1, y, '|');
+            }
+        }
+
+        static void PrintAtPosition(int x, int y, char symbol)
+        {
+            Console.SetCursorPosition(x, y); 
+            Console.Write(symbol);
+        }
+
+        static void DrawSecondPlayer()
+        {
+            for (int y = secondPlayerPos; y < secondPlayerPos + secondPadSize; y++)
+            {
+                PrintAtPosition(Console.WindowWidth - 1, y, '|'); 
+                PrintAtPosition(Console.WindowWidth - 2, y, '|');
+            }
+        }
+
+        static void SetInitialPosition()
+        {
+            firstPlayerPos = Console.WindowHeight / 2 - firstPadSize / 2;
+            secondPlayerPos = Console.WindowHeight / 2 - secondPadSize / 2;
+            SetTheBallInTheMiddleOfTheField();
+        }
+
+        static void SetTheBallInTheMiddleOfTheField()
+         {
+             ballPosX = Console.WindowWidth / 2;
+             ballPosY = Console.WindowHeight / 2;
+         }
+        static void DrawBall()
+        {
+            PrintAtPosition(ballPosX, ballPosY, '@');
+        }
+
+        static void PrintResult()
+        {
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 1, 0);
+            Console.WriteLine("{0} - {1}", firstPlayerResult, secondPlayerResult);
+        }
+
+        static void MoveFirstPlayerDown()
+        {
+            if (firstPlayerPos < Console.WindowHeight - firstPadSize)
+            {
+                 firstPlayerPos++;
+            }
+           
+        }
+
+        static void MoveFirstPlayerUp()
+        {
+            if (firstPlayerPos > 0) 
+            {
+                firstPlayerPos--;
+            }
+            
+        }
+
+        static void MoveSecondPlayerDown()
+        {
+            if (secondPlayerPos < Console.WindowHeight - secondPadSize)
+            {
+                secondPlayerPos++;
+            }
+
+        }
+
+        static void MoveSecondPlayerUp()
+        {
+            if (secondPlayerPos > 0) 
+            {
+                secondPlayerPos--;
+            }
+
+        }
+
+        static void SecondPlayerMove() 
+        {
+            int randomNum = randGenerator.Next(0, 2); 
+            //if (randomNum == 0)
+            //{
+            //    MoveSecondPlayerUp();
+            //}
+            //if (randomNum == 1)
+            //{
+            //    MoveSecondPlayerDown();
+            //}
+
+            if (randomNum == 0)
+            {
+                if (ballDirectionUp == true)
+                {
+                    MoveSecondPlayerUp();
+                }
+                else
+                {
+                    MoveSecondPlayerDown();
+                }
+            }
+        }
+
+       static void MoveBall()
+        {
+            if (ballPosY == 0)
+            {
+                ballDirectionUp = false; 
+            }
+
+            if (ballPosY == Console.WindowHeight - 1) 
+            {
+                ballDirectionUp = true;
+            }
+
+            if (ballPosX == Console.WindowWidth -1)
+            {
+                 SetTheBallInTheMiddleOfTheField();
+                 ballDirectionRight = false;
+                 ballDirectionUp = true;
+                 firstPlayerResult++;
+
+            }
+
+            if (ballPosX == 0)
+            {
+                SetTheBallInTheMiddleOfTheField();
+                ballDirectionRight = true;
+                ballDirectionUp = true;
+                secondPlayerResult++; 
+            }
+
+            if (ballPosX < 3)
+            {
+                if (ballPosY >= firstPlayerPos && ballPosY < firstPlayerPos + firstPadSize)
+                {
+                    ballDirectionRight = true;
+                }
+            }
+
+            if (ballPosX >= Console.WindowWidth - 3 - 1)
+            {
+                if(ballPosY >= secondPlayerPos && ballPosY < secondPlayerPos + secondPadSize)
+                {
+                    ballDirectionRight = false;
+                }
+            }
+
+            if (ballDirectionUp)
+            {
+                ballPosY--; 
+            }
+            else
+            {
+                ballPosY++;
+            }
+
+            if (ballDirectionRight)
+            {
+                ballPosX++;
+            }
+            else
+            {
+                ballPosX--;
+            }
+        }
+
+        static void Main()
+        {
+            SetInitialPosition(); 
+            RemoveScrollBars(); 
+            while (true)
+            {
+                if (Console.KeyAvailable) 
+                {
+                    ConsoleKeyInfo keyInfo = Console.ReadKey(); 
+                    if (keyInfo.Key == ConsoleKey.UpArrow)
+                    {
+                        MoveFirstPlayerUp();
+                    }
+
+                    if (keyInfo.Key == ConsoleKey.DownArrow)
+                    {
+                        MoveFirstPlayerDown();
+                    }
+                }
+
+                SecondPlayerMove(); 
+
+                MoveBall(); 
+
+                Console.Clear(); 
+                DrawFirstPlayer();
+                DrawSecondPlayer(); 
+
+                DrawBall(); 
+                PrintResult(); 
+                Thread.Sleep(60); 
+            }
+        }
+        
+    }
+
+}
